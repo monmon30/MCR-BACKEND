@@ -12,7 +12,7 @@ return [
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
-    */
+     */
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'passport' => [
+        'endpoint' => env("PASSPORT_TOKEN_ENDPOINT"),
+        'client_id' => env('PASSPORT_PASSWORD_ID'),
+        'client_password' => env('PASSPORT_PASSWORD_PASSWORD'),
+    ],
 ];

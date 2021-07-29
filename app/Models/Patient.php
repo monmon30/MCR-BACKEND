@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Patient extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
@@ -35,6 +36,11 @@ class Patient extends Model
     public function setAddressAttribute($value)
     {
         $this->attributes['address'] = Str::upper($value);
+    }
+
+    public function setSexAttribute($value)
+    {
+        $this->attributes['sex'] = Str::upper($value);
     }
 
     public function getFullnameAttribute($value)

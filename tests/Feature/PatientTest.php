@@ -74,6 +74,51 @@ class PatientTest extends TestCase
         $res->assertJson($this->resourceData($patient));
     }
 
+    public function test_user_can_update_patient_data()
+    {
+        $patient = Patient::factory()->create(['firstname' => 'etits']);
+        $res = $this->put("/api/patients/$patient->id", [
+            'firstname' => "monmon",
+            'middlename' => "lagas",
+            'lastname' => "cunanan",
+            'suffix' => "III",
+            'birthday' => "1992-12-02",
+            'sex' => "f",
+            'address' => 'sampaloc',
+            'contact_number' => '09112223333',
+            'landline' => '888-8888',
+            'email' => 'nomnom@test.com',
+            'weight' => 64,
+            'height' => 100,
+        ]);
+
+        $_patient = Patient::first();
+
+        $this->assertEquals($_patient->firstname, "MONMON");
+        $this->assertEquals($_patient->middlename, "LAGAS");
+        $this->assertEquals($_patient->lastname, "CUNANAN");
+        $this->assertEquals($_patient->suffix, "III");
+        $this->assertEquals($_patient->birthday, "1992-12-02");
+        $this->assertEquals($_patient->sex, "F");
+        $this->assertEquals($_patient->address, "SAMPALOC");
+        $this->assertEquals($_patient->contact_number, "09112223333");
+        $this->assertEquals($_patient->landline, "888-8888");
+        $this->assertEquals($_patient->email, "nomnom@test.com");
+        $this->assertEquals($_patient->weight, 64);
+        $this->assertEquals($_patient->height, 100);
+        $res->assertOk();
+        $res->assertJson($this->resourceData($_patient));
+    }
+
+    public function test_user_can_delete_patient()
+    {
+        $patient = Patient::factory()->create();
+        $res = $this->delete("/api/patients/$patient->id");
+        $this->assertSoftDeleted($patient);
+        $res->assertNoContent();
+
+    }
+
     private function resourceData($patient)
     {
         return [

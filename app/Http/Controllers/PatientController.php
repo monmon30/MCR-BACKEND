@@ -50,9 +50,10 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(PatientRequest $request, Patient $patient)
     {
-        //
+        $patient->update($request->validated());
+        return new PatientResource(Patient::where('id', $patient->id)->first());
     }
 
     /**
@@ -63,6 +64,7 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        $patient->delete();
+        return response()->json([], 204);
     }
 }

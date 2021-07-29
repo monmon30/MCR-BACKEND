@@ -39,9 +39,14 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function logout(Request $request)
     {
-        //
+        auth()->user()->tokens->each(function ($token) {
+            $token->delete();
+        });
+
+        return response()->noContent();
+
     }
 
     /**

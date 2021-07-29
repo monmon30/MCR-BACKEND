@@ -66,4 +66,12 @@ class AuthTest extends TestCase
             ],
         ]);
     }
+
+    public function test_user_can_logout()
+    {
+        $this->withoutExceptionHandling();
+        $this->actingAs(User::factory()->create(), 'api');
+        $res = $this->post('/api/auth/logout');
+        $res->assertNoContent();
+    }
 }

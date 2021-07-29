@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PatientRequest;
+use App\Http\Resources\PatientCollection;
 use App\Http\Resources\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        return new PatientCollection(Patient::paginate());
     }
 
     /**
@@ -39,7 +40,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        return new PatientResource($patient);
     }
 
     /**

@@ -20,7 +20,7 @@ class PatientTest extends TestCase
 
     public function test_user_can_add_patient()
     {
-        $response = $this->post('/api/patient/', [
+        $response = $this->post('/api/patients', [
             'firstname' => "mon",
             'middlename' => "lag",
             'lastname' => "cun",
@@ -54,6 +54,26 @@ class PatientTest extends TestCase
         $response->assertJson($this->resourceData($patient));
     }
 
+    public function test_user_can_fetch_patients()
+    {
+        Patient::factory(3)->create();
+        $patients = Patient::all();
+        $res = $this->get('/api/patients');
+        $res->assertOk();
+
+        $this->assertCount(3, $patients);
+        $res->assertJson($this->collectionData($patients));
+        $res->assertJsonStructure(['meta', 'data', 'links']);
+    }
+
+    public function test_user_can_fetch_patient()
+    {
+        $patient = Patient::factory()->create();
+        $res = $this->get("/api/patients/$patient->id");
+        $res->assertOk();
+        $res->assertJson($this->resourceData($patient));
+    }
+
     private function resourceData($patient)
     {
         return [
@@ -61,6 +81,7 @@ class PatientTest extends TestCase
                 "type" => "patient",
                 "patient_id" => $patient->id,
                 "attributes" => [
+                    "fullname" => $patient->fullname,
                     "firstname" => $patient->firstname,
                     "middlename" => $patient->middlename,
                     "lastname" => $patient->lastname,
@@ -80,4 +101,20 @@ class PatientTest extends TestCase
             ],
         ];
     }
+
+    private function collectionData($patients)
+    {
+        $patientArr = [];
+        foreach ($patients as $patient) {
+            array_push($patientArr, $this->resourceData($patient));
+        }
+
+        return [
+            "data" => $patientArr,
+            "links" => [
+                "self" => url("/api/patients"),
+            ],
+        ];
+    }
+
 }

@@ -36,4 +36,10 @@ class Patient extends Model
     {
         $this->attributes['address'] = Str::upper($value);
     }
+
+    public function getFullnameAttribute($value)
+    {
+        $middlename = $this->middlename ? " " . $this->middlename[0] . "." : null;
+        return "{$this->lastname}, {$this->firstname}{$middlename}";
+    }
 }

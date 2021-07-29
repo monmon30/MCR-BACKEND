@@ -17,4 +17,6 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::prefix('patient')->apiResource('patient', PatientController::class);
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('patients', PatientController::class);
+});

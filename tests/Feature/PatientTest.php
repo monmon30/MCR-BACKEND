@@ -1,0 +1,83 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\Patient;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class PatientTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutExceptionHandling();
+        $this->actingAs(User::factory()->create(), 'api');
+    }
+
+    public function test_user_can_add_patient()
+    {
+        $response = $this->post('/api/patient/', [
+            'firstname' => "mon",
+            'middlename' => "lag",
+            'lastname' => "cun",
+            'suffix' => "jr",
+            'birthday' => "1991-12-01",
+            'sex' => "M",
+            'address' => 'tambunting',
+            'contact_number' => '09123456789',
+            'landline' => '123-1234',
+            'email' => 'monmon@test.com',
+            'weight' => 65,
+            'height' => 165,
+        ]);
+
+        $patient = Patient::first();
+
+        $this->assertEquals($patient->firstname, "MON");
+        $this->assertEquals($patient->lastname, "CUN");
+        $this->assertEquals($patient->middlename, "LAG");
+        $this->assertEquals($patient->suffix, "JR");
+        $this->assertEquals($patient->birthday, "1991-12-01");
+        $this->assertEquals($patient->sex, "M");
+        $this->assertEquals($patient->address, "TAMBUNTING");
+        $this->assertEquals($patient->contact_number, "09123456789");
+        $this->assertEquals($patient->landline, "123-1234");
+        $this->assertEquals($patient->email, "monmon@test.com");
+        $this->assertEquals($patient->weight, 65);
+        $this->assertEquals($patient->height, 165);
+        $this->assertCount(1, Patient::all());
+        $response->assertCreated();
+        $response->assertJson($this->resourceData($patient));
+    }
+
+    private function resourceData($patient)
+    {
+        return [
+            "data" => [
+                "type" => "patient",
+                "patient_id" => $patient->id,
+                "attributes" => [
+                    "firstname" => $patient->firstname,
+                    "middlename" => $patient->middlename,
+                    "lastname" => $patient->lastname,
+                    "suffix" => $patient->suffix,
+                    "birthday" => $patient->birthday,
+                    "sex" => $patient->sex,
+                    "address" => $patient->address,
+                    "contact_number" => $patient->contact_number,
+                    "landline" => $patient->landline,
+                    "email" => $patient->email,
+                    "weight" => $patient->weight,
+                    "height" => $patient->height,
+                ],
+            ],
+            'links' => [
+                'self' => url("/api/patient/$patient->id"),
+            ],
+        ];
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AuthUserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -15,7 +16,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-
+        return new AuthUserResource(auth()->user());
     }
 
     public function login(Request $request)

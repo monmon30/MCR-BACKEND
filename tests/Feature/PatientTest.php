@@ -115,6 +115,7 @@ class PatientTest extends TestCase
         $patient = Patient::factory()->create();
         $res = $this->delete("/api/patients/$patient->id");
         $this->assertSoftDeleted($patient);
+        $this->assertCount(0, Patient::all());
         $res->assertNoContent();
 
     }

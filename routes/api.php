@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,5 +19,8 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::apiResource('patients', PatientController::class);
+    Route::apiResources([
+        'patients' => PatientController::class,
+        'patients.consultations' => ConsultationController::class,
+    ]);
 });

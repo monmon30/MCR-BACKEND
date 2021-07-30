@@ -51,4 +51,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Patient::class);
     }
+
+    public function consultations()
+    {
+        return $this->hasMany(Consultation::class);
+    }
+
+    public function getFullnameAttribute($value)
+    {
+        $middlename = $this->middlename ? " " . $this->middlename[0] . "." : null;
+        return "{$this->lastname}, {$this->firstname}{$middlename}";
+    }
 }

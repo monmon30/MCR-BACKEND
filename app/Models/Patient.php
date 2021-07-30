@@ -48,4 +48,14 @@ class Patient extends Model
         $middlename = $this->middlename ? " " . $this->middlename[0] . "." : null;
         return "{$this->lastname}, {$this->firstname}{$middlename}";
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function consultations()
+    {
+        return $this->hasMany(Consultation::class);
+    }
 }

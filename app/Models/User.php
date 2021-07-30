@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,9 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    private function dateFormat($value)
+    {
+        return is_null($value) ? null : Carbon::parse($value)->format('Y-m-d');
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function getBirthdayAttribute($value)
+    {
+        return $this->dateFormat($value);
     }
 
     public function patients()

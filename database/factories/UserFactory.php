@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => 'water123',
+            'roles' => config('roles.roles')[0], // Admin Role
             'remember_token' => Str::random(10),
         ];
     }

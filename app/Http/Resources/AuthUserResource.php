@@ -24,6 +24,7 @@ class AuthUserResource extends JsonResource
                     "lastname" => $this->lastname,
                     "email" => $this->email,
                     "birthday" => $this->birthday,
+                    "roles" => $this->roles,
                 ],
             ],
             "links" => [

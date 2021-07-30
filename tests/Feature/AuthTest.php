@@ -18,13 +18,13 @@ class AuthTest extends TestCase
 
     public function test_user_can_login()
     {
-        $auth = User::factory()->create([
+        User::factory()->create([
             'email' => 'mon@test.com',
             'password' => 'water123',
         ]);
 
         $response = $this->post("/api/auth/login", [
-            'email' => "mon@test.com",
+            'email' => "admin@test.com",
             'password' => "water123",
         ]);
 
@@ -49,7 +49,7 @@ class AuthTest extends TestCase
         $this->assertNotNull($auth->lastname);
         $this->assertNotNull($auth->birthday);
 
-        $res->assertExactJson([
+        $res->assertJson([
             "data" => [
                 "type" => "auth user",
                 "user_id" => $auth->id,
@@ -58,6 +58,7 @@ class AuthTest extends TestCase
                     "middlename" => $auth->middlename,
                     "lastname" => $auth->lastname,
                     "email" => $auth->email,
+                    "roles" => config('roles.roles')[0], //Admin role
                     "birthday" => $auth->birthday,
                 ],
             ],

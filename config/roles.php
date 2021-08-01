@@ -3,7 +3,7 @@
 return [
     "roles" => [
         "Admin",
-        "Physician",
-        "Encoder",
+        "Doctor",
+        "Staff",
     ],
 ];

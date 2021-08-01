@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class EncoderSeeder extends Seeder
+class StaffSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class EncoderSeeder extends Seeder
     {
         User::factory()->create([
             'roles' => config('roles.roles')[2],
-            'email' => 'encoder@test.com',
+            'email' => 'staff@test.com',
             'password' => 'water123',
         ]);
 

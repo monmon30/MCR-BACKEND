@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class PhysicianSeeder extends Seeder
+class DoctorSeeder extends Seeder
 {
     /**
      * Run the database seeds.

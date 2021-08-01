@@ -19,6 +19,7 @@ class AuthUserResource extends JsonResource
                 "type" => "auth user",
                 "user_id" => $this->id,
                 "attributes" => [
+                    "fullname" => $this->fullname,
                     "firstname" => $this->firstname,
                     "middlename" => $this->middlename,
                     "lastname" => $this->lastname,

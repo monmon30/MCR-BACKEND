@@ -7,7 +7,6 @@ use App\Http\Resources\ConsultationCollection;
 use App\Http\Resources\ConsultationResource;
 use App\Models\Consultation;
 use App\Models\Patient;
-use Illuminate\Http\Request;
 
 class ConsultationController extends Controller
 {

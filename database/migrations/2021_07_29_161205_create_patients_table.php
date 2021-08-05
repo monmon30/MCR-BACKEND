@@ -27,6 +27,7 @@ class CreatePatientsTable extends Migration
             $table->string('email')->nullable();
             $table->string('weight')->nullable();
             $table->string('height')->nullable();
+            $table->string('password');
             $table->foreignId('user_id');
             $table->softDeletes();
             $table->timestamps();

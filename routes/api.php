@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\PatientAuthController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,9 @@ Route::middleware('auth:api')->group(function () {
         'patients' => PatientController::class,
         'patients.consultations' => ConsultationController::class,
     ]);
+});
+
+Route::prefix('patients/auth')->group(function () {
+    Route::post('login', [PatientAuthController::class, 'login']);
+    Route::get('user', [PatientAuthController::class, 'index']);
 });

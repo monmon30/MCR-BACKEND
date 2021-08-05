@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class PatientTest extends TestCase
@@ -33,6 +34,7 @@ class PatientTest extends TestCase
             'email' => 'monmon@test.com',
             'weight' => 65,
             'height' => 165,
+            'password' => 'water123',
         ]);
 
         $patient = Patient::first();
@@ -49,6 +51,8 @@ class PatientTest extends TestCase
         $this->assertEquals($patient->email, "monmon@test.com");
         $this->assertEquals($patient->weight, 65);
         $this->assertEquals($patient->height, 165);
+        $this->assertNotNull($patient->password);
+        $this->assertTrue(Hash::check('water123', $patient->password));
         $this->assertCount(1, Patient::all());
         $response->assertCreated();
         $response->assertJson($this->resourceData($patient));
@@ -117,7 +121,36 @@ class PatientTest extends TestCase
         $this->assertSoftDeleted($patient);
         $this->assertCount(0, Patient::all());
         $res->assertNoContent();
+    }
 
+    public function test_patient_can_login()
+    {
+        $pat = Patient::factory()->create(['email' => 'pat@test.com', 'password' => 'water123']);
+        $res = $this->post('/api/patients/auth/login', [
+            'email' => $pat->email,
+            'password' => 'water123',
+        ]);
+        $res->assertOk();
+        $res->assertJsonStructure(['data', 'links']);
+    }
+
+    public function test_patient_with_wrong_credentials_cannot_login()
+    {
+        $pat = Patient::factory()->create(['email' => 'pat@test.com', 'password' => 'water123']);
+        $res = $this->post('/api/patients/auth/login', [
+            'email' => $pat->email,
+            'password' => 'waters123',
+        ]);
+        $res->assertStatus(500);
+        $res->assertJsonStructure(['error']);
+    }
+
+    public function test_auth_patient_can_fetch_personal_data()
+    {
+        $pat = Patient::factory()->create();
+        $res = $this->get('/api/patients/auth/user', [
+            'Auth_Patient' => $pat->generatedPatientApiKey,
+        ])->assertOk();
     }
 
     private function resourceData($patient)

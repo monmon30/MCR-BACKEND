@@ -36,6 +36,7 @@ class PatientRequest extends FormRequest
             'email' => "",
             'weight' => "",
             'height' => "",
+            'password' => "",
         ];
     }
 }

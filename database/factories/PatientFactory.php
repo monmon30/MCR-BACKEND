@@ -39,6 +39,7 @@ class PatientFactory extends Factory
             "weight" => 65,
             "height" => 165,
             "user_id" => User::factory(),
+            "password" => "water123",
         ];
     }
 

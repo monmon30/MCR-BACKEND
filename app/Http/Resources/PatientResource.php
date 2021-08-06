@@ -33,6 +33,7 @@ class PatientResource extends JsonResource
                     "weight" => $this->weight,
                     "height" => $this->height,
                 ],
+                "appointments" => new AppointmentCollection($this->appointments),
             ],
             'links' => [
                 'self' => url("/api/patient/$this->id"),

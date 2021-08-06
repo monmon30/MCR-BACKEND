@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentPatientController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PatientAuthController;
@@ -26,7 +27,8 @@ Route::middleware('auth:api')->group(function () {
     ]);
 });
 
-Route::prefix('patients/auth')->group(function () {
-    Route::post('login', [PatientAuthController::class, 'login']);
-    Route::get('user', [PatientAuthController::class, 'index']);
+Route::prefix('patients')->group(function () {
+    Route::post('auth/login', [PatientAuthController::class, 'login']);
+    Route::get('auth/user', [PatientAuthController::class, 'index']);
 });
+Route::apiResource('patients.appointments', AppointmentPatientController::class);

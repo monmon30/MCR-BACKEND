@@ -63,6 +63,8 @@ class AppointmentPatientTest extends TestCase
                                     "schedule" => $app->schedule,
                                     "doctor" => $app->user_id,
                                     "done" => $app->done,
+                                    "patient_id" => $pat->id,
+                                    "patient_name" => $pat->fullname,
                                 ],
                             ],
                         ],

@@ -22,4 +22,14 @@ class Appointment extends Model
         return $this->dateFormat($value);
     }
 
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function getDoneAttribute($value)
+    {
+        return boolval($value);
+    }
+
 }

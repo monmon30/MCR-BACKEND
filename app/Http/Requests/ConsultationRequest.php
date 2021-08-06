@@ -29,6 +29,9 @@ class ConsultationRequest extends FormRequest
             "recommendation" => "",
             "weight" => "",
             "height" => "",
+            "temperature" => "",
+            "blood_pressure" => "",
+            "appointment_id" => "",
         ];
     }
 }

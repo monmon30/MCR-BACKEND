@@ -36,6 +36,9 @@ class ConsultationController extends Controller
             'prescription' => $request->prescription,
             'weight' => $request->weight,
             'height' => $request->height,
+            'temperature' => $request->temperature,
+            'blood_pressure' => $request->blood_pressure,
+            'appointment_id' => $request->appointment_id,
         ]);
 
         return new ConsultationResource($data);

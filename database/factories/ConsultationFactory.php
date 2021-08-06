@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Appointment;
 use App\Models\Consultation;
 use App\Models\Patient;
 use App\Models\User;
@@ -27,6 +28,7 @@ class ConsultationFactory extends Factory
         return [
             "patient_id" => Patient::factory(),
             "user_id" => User::factory(),
+            "appointment_id" => Appointment::factory(),
             "findings" => "findings",
             "recommendation" => "recommendation",
             "prescription" => "prescription",

@@ -17,6 +17,7 @@ class CreateConsultationsTable extends Migration
             $table->id();
             $table->foreignId('patient_id');
             $table->foreignId('user_id');
+            $table->foreignId('appointment_id');
             $table->longText('findings')->nullable();
             $table->longText('prescription')->nullable();
             $table->longText('recommendation')->nullable();

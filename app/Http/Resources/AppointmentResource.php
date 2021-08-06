@@ -23,6 +23,8 @@ class AppointmentResource extends JsonResource
                     "schedule" => $this->schedule,
                     "doctor" => $this->user_id,
                     "done" => boolval($this->done),
+                    "patient_id" => $this->patient_id,
+                    "patient_name" => $this->patient->fullname,
                 ],
             ],
             "links" => [

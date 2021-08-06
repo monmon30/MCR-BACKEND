@@ -18,6 +18,7 @@ class CreateAppointmentsTable extends Migration
             $table->dateTime('schedule');
             $table->string('reason');
             $table->foreignId('patient_id')->constrained();
+            $table->foreignId('user_id')->nullable();
             $table->boolean('done')->default(false);
             $table->timestamps();
         });

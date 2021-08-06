@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Appointment;
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -26,6 +27,22 @@ class AppointmentTest extends TestCase
         $response = $this->get('/api/appointments');
         $response->assertStatus(200);
         $response->assertJson($this->collectionData($apps));
+    }
+
+    public function test_doctor_can_make_the_appointment_done()
+    {
+        $pat = Patient::factory()->create();
+        $app = Appointment::factory()->create(['patient_id' => $pat->id, 'done' => false, 'user_id' => null]);
+        $res = $this->post("/api/patients/$pat->id/appointments/$app->id/done");
+
+        $res->assertOk();
+        $_app = Appointment::where('id', $app->id)->where('patient_id', $pat->id)->first();
+        $this->assertEquals($_app->patient_id, $pat->id);
+        $this->assertTrue($_app->done);
+        $this->assertNotNull($_app->user_id);
+        $this->assertEquals(auth()->user()->id, $_app->user_id);
+        $res->assertJson($this->resourceData($_app));
+
     }
 
     private function resourceData($app)

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentPatientController;
+use App\Http\Controllers\AppointmentPatientDoneController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PatientAuthController;
@@ -27,6 +28,7 @@ Route::middleware('auth:api')->group(function () {
         'patients.consultations' => ConsultationController::class,
         'appointments' => AppointmentController::class,
     ]);
+    Route::post('/patients/{patient}/appointments/{appointment}/done', [AppointmentPatientDoneController::class, 'mark_done']);
 });
 
 Route::prefix('patients')->group(function () {

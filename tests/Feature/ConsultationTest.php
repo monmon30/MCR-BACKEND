@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Appointment;
 use App\Models\Consultation;
 use App\Models\Patient;
 use App\Models\User;
@@ -22,6 +23,7 @@ class ConsultationTest extends TestCase
     public function test_user_can_add_consultations_on_patient()
     {
         $patient = Patient::factory()->create();
+        $app = Appointment::factory()->create(['patient_id' => $patient->id]);
 
         $response = $this->post("/api/patients/$patient->id/consultations", [
             "findings" => "jebs ng jebs pag umaga",
@@ -29,6 +31,9 @@ class ConsultationTest extends TestCase
             "recommendation" => "iwasan kumain ng peanut pre.",
             "weight" => 60,
             "height" => 160,
+            "temperature" => "36.4",
+            "blood_pressure" => "120/80",
+            "appointment_id" => $app->id,
         ]);
 
         $patientCon = $patient->consultations()->first();
@@ -38,6 +43,10 @@ class ConsultationTest extends TestCase
         $this->assertEquals($patientCon->weight, 60);
         $this->assertEquals($patientCon->height, 160);
         $this->assertEquals($patientCon->user_id, auth()->user()->id);
+        $this->assertEquals("36.4", $patientCon->temperature);
+        $this->assertEquals("120/80", $patientCon->blood_pressure);
+        $this->assertEquals($app->id, $patientCon->appointment_id);
+
         $response->assertCreated();
         $response->assertJson($this->resourceData($patientCon));
     }

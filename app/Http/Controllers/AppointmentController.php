@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AppointmentRequest;
+use App\Http\Resources\AppointmentCollection;
 use App\Models\Appointment;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        return new AppointmentCollection(Appointment::where('done', false)->get());
     }
 
     public function store(AppointmentRequest $request, Patient $patient)

@@ -26,8 +26,7 @@ class AppointmentFactory extends Factory
             "schedule" => $this->faker->dateTime(),
             "reason" => $this->faker->paragraph(1),
             "patient_id" => Patient::factory(),
-            "done" => boolval(0),
-
+            "done" => boolval(mt_rand(0, 1)),
         ];
     }
 }

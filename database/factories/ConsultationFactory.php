@@ -30,6 +30,8 @@ class ConsultationFactory extends Factory
             "findings" => "findings",
             "recommendation" => "recommendation",
             "prescription" => "prescription",
+            "temperature" => "36.4",
+            "blood_pressure" => "120/80",
             "weight" => strval(Arr::random([50, 55, 60])),
             "height" => strval(Arr::random([150, 155, 160])),
         ];

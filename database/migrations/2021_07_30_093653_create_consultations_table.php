@@ -20,6 +20,8 @@ class CreateConsultationsTable extends Migration
             $table->longText('findings')->nullable();
             $table->longText('prescription')->nullable();
             $table->longText('recommendation')->nullable();
+            $table->string('temperature')->nullable();
+            $table->string('blood_pressure')->nullable();
             $table->string('weight')->nullable();
             $table->string('height')->nullable();
             $table->softDeletes();

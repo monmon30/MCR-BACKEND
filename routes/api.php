@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentPatientController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultationController;
@@ -24,6 +25,7 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResources([
         'patients' => PatientController::class,
         'patients.consultations' => ConsultationController::class,
+        'appointments' => AppointmentController::class,
     ]);
 });
 

@@ -23,6 +23,8 @@ class ConsultationResource extends JsonResource
                     "findings" => $this->findings,
                     "prescription" => $this->prescription,
                     "recommendation" => $this->recommendation,
+                    "temperature" => $this->temperature,
+                    "blood_pressure" => $this->blood_pressure,
                     "weight" => $this->weight,
                     "height" => $this->height,
                     "added_by" => $this->user->fullname,

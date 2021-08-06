@@ -112,6 +112,8 @@ class ConsultationTest extends TestCase
                     "recommendation" => $consultation->recommendation,
                     "weight" => $consultation->weight,
                     "height" => $consultation->height,
+                    "temperature" => $consultation->temperature,
+                    "blood_pressure" => $consultation->blood_pressure,
                     "added_by" => $consultation->user->fullname,
                 ],
             ],

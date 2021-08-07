@@ -29,6 +29,7 @@ class ConsultationResource extends JsonResource
                     "height" => $this->height,
                     "added_by" => $this->user->fullname,
                     "appointment_id" => $this->appointment_id,
+                    "consultation_date" => $this->consultation_date,
                 ],
             ],
             "links" => [

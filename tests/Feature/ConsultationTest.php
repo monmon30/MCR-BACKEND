@@ -125,6 +125,7 @@ class ConsultationTest extends TestCase
                     "blood_pressure" => $consultation->blood_pressure,
                     "added_by" => $consultation->user->fullname,
                     "appointment_id" => $consultation->appointment_id,
+                    "consultation_date" => $consultation->consultation_date,
                 ],
             ],
             "links" => [

@@ -35,4 +35,4 @@ Route::prefix('patients')->group(function () {
     Route::post('auth/login', [PatientAuthController::class, 'login']);
     Route::get('auth/user', [PatientAuthController::class, 'index']);
 });
-Route::apiResource('patients.appointments', AppointmentPatientController::class);
+Route::apiResource('patients.appointments', AppointmentPatientController::class)->only(['store', 'index']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PatientAuthResource;
+use App\Http\Resources\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,7 @@ class PatientAuthController extends Controller
         $credentials = $request->only('email', 'password');
         $pat = Patient::where('email', $credentials['email'])->firstOrFail();
         if (Hash::check($credentials['password'], $pat->password)) {
-            return new PatientAuthResource($pat);
+            return new PatientResource($pat);
         } else {
             return response()->json(['error' => 'Invalid Credentials'], 500);
         }

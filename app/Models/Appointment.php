@@ -17,9 +17,14 @@ class Appointment extends Model
         return is_null($value) ? null : Carbon::parse($value)->format('Y-m-d');
     }
 
+    private function dateDayDateFormat($value)
+    {
+        return is_null($value) ? null : Carbon::parse($value)->toDayDateTimeString();
+    }
+
     public function getScheduleAttribute($value)
     {
-        return $this->dateFormat($value);
+        return $this->dateDayDateFormat($value);
     }
 
     public function patient()

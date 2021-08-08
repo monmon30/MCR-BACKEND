@@ -153,6 +153,18 @@ class PatientTest extends TestCase
         ])->assertOk();
     }
 
+    public function test_failed_auth_test()
+    {
+        $res = $this->post('/api/patients/auth/login', [
+            'email' => 'pat@test.com',
+            'password' => 'waters123',
+        ]);
+
+        $res->assertNotFound();
+        $res->assertJson(['error' => 'No user data']);
+
+    }
+
     private function resourceData($patient)
     {
         return [

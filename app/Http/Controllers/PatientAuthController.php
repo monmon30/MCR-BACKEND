@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PatientAuthResource;
 use App\Http\Resources\PatientResource;
 use App\Models\Patient;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,12 +34,17 @@ class PatientAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        $pat = Patient::where('email', $credentials['email'])->firstOrFail();
-        if (Hash::check($credentials['password'], $pat->password)) {
-            return new PatientResource($pat);
-        } else {
-            return response()->json(['error' => 'Invalid Credentials'], 500);
+        try {
+            $credentials = $request->only('email', 'password');
+            $pat = Patient::where('email', $credentials['email'])->firstOrFail();
+            if (Hash::check($credentials['password'], $pat->password)) {
+                return new PatientResource($pat);
+            } else {
+                return response()->json(['error' => 'Invalid Credentials'], 500);
+            }
+
+        } catch (ModelNotFoundException $th) {
+            return response()->json(['error' => 'No user data'], 404);
         }
     }
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentPatientController;
 use App\Http\Controllers\AppointmentPatientDoneController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthPatientAppointmentConsultationsController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PatientAuthController;
 use App\Http\Controllers\PatientController;
@@ -36,3 +37,4 @@ Route::prefix('patients')->group(function () {
     Route::get('auth/user', [PatientAuthController::class, 'index']);
 });
 Route::apiResource('patients.appointments', AppointmentPatientController::class)->only(['store', 'index']);
+Route::get('/appointments/{appointment}/patients/{patient}', AuthPatientAppointmentConsultationsController::class);

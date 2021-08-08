@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PatientRequest;
 use App\Http\Resources\PatientCollection;
 use App\Http\Resources\PatientResource;
+use App\Models\Appointment;
+use App\Models\Consultation;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -64,7 +66,9 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        $patient->delete();
+        Patient::destroy($patient->id);
+        Appointment::where('patient_id', $patient->id)->delete();
+        Consultation::where('patient_id', $patient->id)->delete();
         return response()->json([], 204);
     }
 }

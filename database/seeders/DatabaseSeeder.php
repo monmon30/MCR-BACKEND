@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             DoctorSeeder::class,
             StaffSeeder::class,
+            PatientSeeder::class,
         ]);
     }
 }

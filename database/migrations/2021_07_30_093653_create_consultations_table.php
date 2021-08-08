@@ -13,9 +13,11 @@ class CreateConsultationsTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
+
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id');
+            $table->foreignId('patient_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_id');
             $table->foreignId('appointment_id');
             $table->longText('findings')->nullable();

@@ -51,6 +51,30 @@ class UserTest extends TestCase
         $res->assertJson($this->collectionData($users));
     }
 
+    public function test_update_user_account()
+    {
+        $user = User::factory()->create();
+        $res = $this->put("/api/users/$user->id", [
+            "firstname" => "foon",
+            "middlename" => "moon",
+            "lastname" => "loon",
+            "email" => "moon@test.com",
+            "roles" => config('roles.roles')[1],
+            "birthday" => "1993-01-08",
+        ]);
+        $res->assertOk();
+        $_user = User::find($user->id);
+
+        $this->assertEquals('FOON', $_user->firstname);
+        $this->assertEquals('MOON', $_user->middlename);
+        $this->assertEquals('LOON', $_user->lastname);
+        $this->assertEquals('moon@test.com', $_user->email);
+        $this->assertEquals('1993-01-08', $_user->birthday);
+        $this->assertEquals(config('roles.roles')[1], $_user->roles);
+        $res->assertExactJson($this->resourceData($_user));
+        $res->assertJson($this->resourceData($_user));
+    }
+
     public function resourceData(User $user)
     {
         return [

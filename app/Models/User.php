@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -18,11 +19,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -51,6 +48,21 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function setFirstnameAttribute($value)
+    {
+        $this->attributes['firstname'] = Str::upper($value);
+    }
+
+    public function setMiddlenameAttribute($value)
+    {
+        $this->attributes['middlename'] = Str::upper($value);
+    }
+
+    public function setLastnameAttribute($value)
+    {
+        $this->attributes['lastname'] = Str::upper($value);
     }
 
     public function getBirthdayAttribute($value)

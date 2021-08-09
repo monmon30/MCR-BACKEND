@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthPatientAppointmentConsultationsController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PatientAuthController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,7 @@ Route::middleware('auth:api')->group(function () {
         'patients' => PatientController::class,
         'patients.consultations' => ConsultationController::class,
         'appointments' => AppointmentController::class,
+        'users' => UserController::class,
     ]);
     Route::post('/patients/{patient}/appointments/{appointment}/done', [AppointmentPatientDoneController::class, 'mark_done']);
 });

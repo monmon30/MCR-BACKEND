@@ -42,6 +42,15 @@ class UserTest extends TestCase
         $response->assertJson($this->resourceData($user));
     }
 
+    public function test_fetch_all_user_accounts()
+    {
+        User::factory(3)->create();
+        $users = User::all();
+        $res = $this->get('/api/users');
+        $res->assertOk();
+        $res->assertJson($this->collectionData($users));
+    }
+
     public function resourceData(User $user)
     {
         return [
@@ -60,6 +69,21 @@ class UserTest extends TestCase
             ],
             "links" => [
                 "self" => url("/api/users/$user->id"),
+            ],
+        ];
+    }
+
+    private function collectionData($users)
+    {
+        $userArr = [];
+        foreach ($users as $user) {
+            array_push($userArr, $this->resourceData($user));
+        }
+
+        return [
+            "data" => $userArr,
+            "links" => [
+                "self" => url("/api/users"),
             ],
         ];
     }

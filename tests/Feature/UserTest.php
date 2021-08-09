@@ -75,6 +75,15 @@ class UserTest extends TestCase
         $res->assertJson($this->resourceData($_user));
     }
 
+    public function test_fetch_user()
+    {
+        $user = User::factory()->create();
+
+        $res = $this->get("/api/users/$user->id");
+        $res->assertOk();
+        $res->assertJson($this->resourceData($user));
+    }
+
     public function resourceData(User $user)
     {
         return [

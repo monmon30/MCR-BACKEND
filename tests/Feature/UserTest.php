@@ -84,6 +84,14 @@ class UserTest extends TestCase
         $res->assertJson($this->resourceData($user));
     }
 
+    public function test_delete_user_account()
+    {
+        $user = User::factory()->create();
+        $res = $this->delete("/api/users/$user->id");
+        $res->assertNoContent();
+        $this->assertSoftDeleted($user);
+    }
+
     public function resourceData(User $user)
     {
         return [

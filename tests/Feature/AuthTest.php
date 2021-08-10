@@ -18,13 +18,13 @@ class AuthTest extends TestCase
 
     public function test_user_can_login()
     {
-        User::factory()->create([
-            'email' => 'mon@test.com',
-            'password' => 'water123',
-        ]);
+        // User::factory()->create([
+        //     'email' => 'mon@test.com',
+        //     'password' => 'water123',
+        // ]);
 
         $response = $this->post("/api/auth/login", [
-            'email' => "admin@test.com",
+            'email' => "doc@test.com",
             'password' => "water123",
         ]);
 

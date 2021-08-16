@@ -92,6 +92,19 @@ class UserTest extends TestCase
         $this->assertSoftDeleted($user);
     }
 
+    public function test_auth_user_cant_delete_his_account()
+    {
+        $auth = auth()->user();
+        $this->withExceptionHandling();
+        $res = $this->delete("/api/users/$auth->id");
+        $res->assertStatus(500);
+        $res->assertJson([
+            'error' => [
+                "message" => "Failed to delete own account",
+            ],
+        ]);
+    }
+
     public function resourceData(User $user)
     {
         return [

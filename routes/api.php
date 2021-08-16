@@ -9,6 +9,7 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PatientAuthController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::middleware('auth:api')->group(function () {
         'users' => UserController::class,
     ]);
     Route::post('/patients/{patient}/appointments/{appointment}/done', [AppointmentPatientDoneController::class, 'mark_done']);
+    Route::post('/users/{user}/password/reset', UserResetPasswordController::class);
 });
 
 Route::prefix('patients')->group(function () {

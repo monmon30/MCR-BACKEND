@@ -14,6 +14,6 @@ class PatientConsultationsReportController extends Controller
             "consultations" => $patient->consultations,
         ];
 
-        return response()->json(["data" => PDFService::generate_pdf_base64($data, 'pdf.patient')]);
+        return response()->json(["data" => PDFService::generate_pdf_base64($data, 'pdf.patient', $patient->fullname . 'pdf')]);
     }
 }

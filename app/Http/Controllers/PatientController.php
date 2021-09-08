@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PatientRequest;
 use App\Http\Resources\PatientCollection;
 use App\Http\Resources\PatientResource;
+use App\Mail\PatientRegistrationMail;
 use App\Models\Appointment;
 use App\Models\Consultation;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PatientController extends Controller
 {
@@ -30,8 +32,11 @@ class PatientController extends Controller
      */
     public function store(PatientRequest $request)
     {
-        $data = request()->user()->patients()->create($request->validated());
-        return new PatientResource($data);
+
+        $patient = request()->user()->patients()->create($request->validated());
+        Mail::to($patient->email)
+            ->send(new PatientRegistrationMail($patient, $request->password));
+        return new PatientResource($patient);
     }
 
     /**
